@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.model.TipoCliente;
 import com.example.demo.model.Cliente;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +43,7 @@ public class ClienteService {
     }
 
     // Aplicar logica con Pattern Matching
-    public void aplicarBeneficios(String id) {
+    public String aplicarBeneficios(String id) {
         clientes.stream()
                 .filter(cliente -> cliente.id().equals(id))
                 .findFirst()
@@ -54,5 +53,6 @@ public class ClienteService {
                    case REGULAR -> System.out.println("Cliente REGULAR: No tiene descuento.");
                    }
                 });
+        return id;
     }
 }
