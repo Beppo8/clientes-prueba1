@@ -16,7 +16,7 @@ public class ClienteService {
     }
 
     // Obtener Todos
-    public List<Cliente> getClientes() {
+    public List<Cliente> obtenerClientes() {
         return List.copyOf(clientes);
     }
 
@@ -48,9 +48,11 @@ public class ClienteService {
         clientes.stream()
                 .filter(cliente -> cliente.id().equals(id))
                 .findFirst()
-                .ifPresent(cliente -> switch (cliente.tipoCliente()) {
+                .ifPresent(cliente -> {
+                 switch (cliente.tipoCliente()) {
                    case VIP -> System.out.println("Cliente VIP: Descuento aplicado.");
                    case REGULAR -> System.out.println("Cliente REGULAR: No tiene descuento.");
+                   }
                 });
     }
 }

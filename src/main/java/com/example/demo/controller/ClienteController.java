@@ -29,5 +29,24 @@ public class ClienteController {
         return clienteService.obtenerClientes();
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> actualizarCliente(@PathVariable String id, @RequestBody Cliente cliente) {
+        Optional<Cliente> actualizado = clienteService.actualizarCliente(id, cliente);
+        return actualizado.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminarCliente(@PathVariable String id) {
+        boolean eliminado = clienteService.eliminarCliente(id);
+        return eliminado ? ResponseEntity.ok("Cliente eliminado.") : ResponseEntity.notFound().build();
+    }
+
+
+    @PostMapping("/{id}/beneficio")
+    public ResponseEntity<String> aplicarBeneficio(@PathVariable String id) {
+        clienteService.aplicarBeneficios(id);
+        return ResponseEntity.ok("Beneficio aplicado segun tipo de cliente.");
+    }
 
 }
