@@ -20,5 +20,37 @@ public class ClienteService {
         return List.copyOf(clientes);
     }
 
+    // Actualizar Cliente por ID
+    public Optional<Cliente> actualizarCliente(String id, Cliente clienteActualizado) {
+        return clientes.stream()
+                .filter(cliente -> cliente.id().equals(id))
+                .findFirst()
+                .map(clienteExistente -> {
+                    Cliente nuevoCliente = new Cliente(
+                            clienteExistente.id(),
+                            clienteActualizado.nombre(),
+                            clienteActualizado.email(),
+                            clienteActualizado.edad(),
+                            clienteActualizado.tipoCliente()
+                    );
+                    clientes.add(nuevoCliente);
+                    return nuevoCliente;
+                });
+    }
 
+    // Eliminar Cliente por ID
+    public boolean eliminarCliente(String id) {
+        return clientes.removeIf(cliente -> cliente.id().equals(id));
+    }
+
+    // Aplicar logica con Pattern Matching
+    public void aplicarBeneficios(String id) {
+        clientes.stream()
+                .filter(cliente -> cliente.id().equals(id))
+                .findFirst()
+                .ifPresent(cliente -> switch (cliente.tipoCliente()) {
+                   case VIP -> System.out.println("Cliente VIP: Descuento aplicado.");
+                   case REGULAR -> System.out.println("Cliente REGULAR: No tiene descuento.");
+                });
+    }
 }
